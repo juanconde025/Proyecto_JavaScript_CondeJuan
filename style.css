@@ -1,0 +1,13 @@
+.container-fluid{
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-brand{
+    color: white;
+}
+
+.navbar-brand:hover{
+    color: #a7a4a4;
+}
+
