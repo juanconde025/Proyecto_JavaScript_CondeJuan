@@ -103,6 +103,7 @@ function getProgressBarClass(state) {
 }
 
 function isValidEndDate(date) {
+    if (!date) return true;
     const today = new Date();
     const endDate = new Date(date);
     return endDate <= today;
