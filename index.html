@@ -95,6 +95,48 @@
             </div>
         </div>
       </div>
+      <div class="container mt-5 mb-4">
+        <h3>Filtrar Contenido</h3>
+        <form id="filterForm" class="mb-4">
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="filterState" class="form-label">Filtrar por Estado</label>
+                    <select id="filterState" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="terminado">Terminado</option>
+                        <option value="en-progreso">En Progreso</option>
+                        <option value="pendiente">Pendiente</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="filterFormat" class="form-label">Filtrar por Formato</label>
+                    <select id="filterFormat" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="pelicula">Película</option>
+                        <option value="serie">Serie</option>
+                        <option value="libro">Libro</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="filterPlataform" class="form-label">Filtrar por Plataforma</label>
+                    <select id="filterPlataform" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="kindle">Kindle</option>
+                        <option value="google-play-libros">Google Play Libros</option>
+                        <option value="apple-books">Apple Books</option>
+                        <option value="netflix">Netflix</option>
+                        <option value="amazon">Amazon</option>
+                        <option value="disney">Disney+</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="searchTitle" class="form-label">Buscar por Título</label>
+                    <input type="text" class="form-control" id="searchTitle" placeholder="Buscar...">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+        </form>
+    </div>
       <script src="script.js"></script>
 </body>
 </html>
