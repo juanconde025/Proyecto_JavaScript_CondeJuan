@@ -123,3 +123,12 @@ h1, h3 {
 #copy{
     text-align: center;
 }
+
+@media (max-width : 800px) {
+    #carrusel,
+#carrusel img{
+    height: 40vh;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+}
