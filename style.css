@@ -11,3 +11,12 @@
     color: #a7a4a4;
 }
 
+.rating .star {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ddd; /* Estrellas inactivas */
+}
+
+.rating .star.active {
+    color: gold; /* Estrellas activas */
+}
