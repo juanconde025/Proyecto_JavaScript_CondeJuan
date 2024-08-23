@@ -5,22 +5,101 @@ let resources = [];
 const resourceForm = document.getElementById('resourceForm');
 const resourceList = document.getElementById('resourceList');
 
+// Función para cargar recursos desde el localStorage
+function loadResources() {
+    const storedResources = localStorage.getItem('resources');
+    if (storedResources) {
+        resources = JSON.parse(storedResources);
+        renderResources();
+    }
+}
+
+// Función para guardar recursos en el localStorage
+function saveResources() {
+    localStorage.setItem('resources', JSON.stringify(resources));
+}
+
 // Función para renderizar la lista de recursos
 function renderResources() {
     resourceList.innerHTML = '';
     resources.forEach((resource, index) => {
         const li = document.createElement('li');
-        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+        li.className = 'list-group-item';
+
+        // Determinar el porcentaje de la barra de progreso basado en el estado
+        let progressValue = 0;
+        if (resource.state === 'en-progreso') {
+            progressValue = 50;
+        } else if (resource.state === 'terminado') {
+            progressValue = 100;
+        }
+
         li.innerHTML = `
-            ${resource.title} (${resource.gender}) - <strong>${resource.plataform}</strong> ${resource.format} ${resource.date} ${resource.state} 
-            <div>
-                ${renderStars(resource.rating)}
-                <button class="btn btn-sm btn-warning me-2" onclick="editResource(${index})">Editar</button>
-                <button class="btn btn-sm btn-danger" onclick="deleteResource(${index})">Eliminar</button>
+            <div class="card mb-3 shadow-sm">
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex align-items-center justify-content-center bg-light">
+                        <div class="text-center p-3">
+                            <h5 class="card-title">${resource.title}</h5>
+                            <p class="card-text"><span class="badge bg-secondary text-capitalize">${resource.gender}</span></p>
+                            <p class="card-text"><strong>Plataforma:</strong> ${resource.plataform}</p>
+                            <p class="card-text"><strong>Formato:</strong> ${resource.format}</p>
+                            <p class="card-text"><strong>Fecha:</strong> ${resource.date}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <p class="card-text mb-1"><strong>Estado:</strong> ${formatState(resource.state)}</p>
+                                    <div class="progress" role="progressbar" aria-label="Progreso" aria-valuenow="${progressValue}" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar progress-bar-striped ${getProgressBarClass(resource.state)}" style="width: ${progressValue}%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    ${renderStars(resource.rating)}
+                                </div>
+                            </div>
+                            <p class="card-text mt-3"><strong>Reseña:</strong></p>
+                            <p class="card-text">${resource.review || 'Sin reseña disponible.'}</p>
+                            <div class="d-flex justify-content-end mt-3">
+                                <button class="btn btn-sm btn-warning me-2" onclick="editResource(${index})">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteResource(${index})">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
         resourceList.appendChild(li);
     });
+}
+
+// Función para formatear el estado con texto capitalizado
+function formatState(state) {
+    switch(state) {
+        case 'en-progreso':
+            return 'En Progreso';
+        case 'terminado':
+            return 'Terminado';
+        case 'pendiente':
+            return 'Pendiente';
+        default:
+            return state;
+    }
+}
+
+// Función para obtener la clase de la barra de progreso según el estado
+function getProgressBarClass(state) {
+    switch(state) {
+        case 'en-progreso':
+            return 'bg-info';
+        case 'terminado':
+            return 'bg-success';
+        case 'pendiente':
+            return 'bg-secondary';
+        default:
+            return 'bg-secondary';
+    }
 }
 
 // Función para añadir un recurso
@@ -32,11 +111,22 @@ resourceForm.addEventListener('submit', function(event) {
     const format = document.getElementById('format').value;
     const date = document.getElementById('date').value;
     const state = document.getElementById('state').value;
+    const review = document.getElementById('review').value;
 
-    const resource = { title, gender, plataform, format, date, state, rating: selectedRating };
+    const resource = { 
+        title, 
+        gender, 
+        plataform, 
+        format, 
+        date, 
+        state, 
+        rating: selectedRating,
+        review
+    };
     resources.push(resource);
 
     renderResources();
+    saveResources(); // Guardar en localStorage
     resourceForm.reset();
     updateStarRating(0); // Reinicia las estrellas
     selectedRating = 0;
@@ -46,6 +136,7 @@ resourceForm.addEventListener('submit', function(event) {
 function deleteResource(index) {
     resources.splice(index, 1);
     renderResources();
+    saveResources(); // Guardar cambios en localStorage
 }
 
 // Función para editar un recurso
@@ -57,39 +148,46 @@ function editResource(index) {
     document.getElementById('format').value = resource.format;
     document.getElementById('date').value = resource.date;
     document.getElementById('state').value = resource.state;
-    document.getElementById('rating').value = resource.rating;
+    document.getElementById('review').value = resource.review || '';
+    selectedRating = resource.rating;
+    updateStarRating(selectedRating);
 
     resources.splice(index, 1);
     renderResources();
+    saveResources(); // Guardar cambios en localStorage
 }
 
 let selectedRating = 0; // Variable para almacenar la valoración seleccionada
 
-// Añadir un Event Listener para cada estrella
-document.querySelectorAll('.star').forEach(star => {
+// Añadir un Event Listener para cada estrella en el formulario
+document.querySelectorAll('#rating .star').forEach(star => {
     star.addEventListener('click', function() {
-        selectedRating = this.getAttribute('data-value');
+        selectedRating = parseInt(this.getAttribute('data-value'));
         updateStarRating(selectedRating);
     });
 });
 
-// Función para actualizar el estado de las estrellas
+// Función para actualizar el estado de las estrellas en el formulario
 function updateStarRating(rating) {
-    document.querySelectorAll('.star').forEach(star => {
-        if (star.getAttribute('data-value') <= rating) {
-            star.classList.add('active');
+    document.querySelectorAll('#rating .star').forEach(star => {
+        if (parseInt(star.getAttribute('data-value')) <= rating) {
+            star.classList.add('text-warning');
+            star.classList.remove('text-muted');
         } else {
-            star.classList.remove('active');
+            star.classList.add('text-muted');
+            star.classList.remove('text-warning');
         }
     });
 }
 
-
-// Función para renderizar las estrellas de la valoración
+// Función para renderizar las estrellas de la valoración en las tarjetas
 function renderStars(rating) {
     let stars = '';
     for (let i = 1; i <= 5; i++) {
-        stars += `<span class="star ${i <= rating ? 'active' : ''}">&#9733;</span>`;
+        stars += `<span class="star fs-5 ${i <= rating ? 'text-warning' : 'text-muted'}">&#9733;</span>`;
     }
     return stars;
 }
+
+// Cargar los recursos cuando se carga la página
+window.onload = loadResources;
