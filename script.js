@@ -123,8 +123,14 @@ resourceForm.addEventListener('submit', function(event) {
     if (!isValidEndDate(date)) {
         alert('La fecha de terminación no puede ser una fecha futura.');
         return;
+    }else if(state === 'pendiente' || state === 'en-progreso' && date){
+        alert('No puedes poner una fecha si el contenido no esta terminado');
+        return;
+    }else if(state === 'terminado' && !date){
+        alert('Si has agregado un contenido deberías ponerle fecha');
+        return;
     }
-        
+
     const resource = { 
         title, 
         gender, 
