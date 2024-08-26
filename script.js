@@ -124,7 +124,7 @@ resourceForm.addEventListener('submit', function(event) {
         alert('La fecha de terminación no puede ser una fecha futura.');
         return;
     }
-
+        
     const resource = { 
         title, 
         gender, 
@@ -206,6 +206,8 @@ const filterState = document.getElementById('filterState');
 const filterFormat = document.getElementById('filterFormat');
 const filterPlataform = document.getElementById('filterPlataform');
 const searchTitle = document.getElementById('searchTitle');
+const resourceFilter = document.getElementById('resourceFilter');
+
 
 filterForm.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -226,7 +228,7 @@ function filterResources() {
 }
 
 function renderFilteredResources(filteredResources) {
-    resourceList.innerHTML = '';
+    resourceFilter.innerHTML = '';
     filteredResources.forEach((resource, index) => {
         const li = document.createElement('li');
         li.className = 'list-group-item';
@@ -275,7 +277,7 @@ function renderFilteredResources(filteredResources) {
                 </div>
             </div>
         `;
-        resourceList.appendChild(li);
+        resourceFilter.appendChild(li);
     });
 }
 

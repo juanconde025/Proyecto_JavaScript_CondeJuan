@@ -22,7 +22,7 @@
 }
 
 body {
-    background: linear-gradient(to right, #f8f9fa, #e0e0e0);
+    background: linear-gradient(45deg, #e997e9, #d678d6, #7272c4);
     font-family: 'Roboto', sans-serif;
     color: #333;
 }
@@ -44,22 +44,28 @@ h1, h3 {
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #FF00FF;
+    border-color: #800080;
     font-weight: 500;
     border-radius: 50px;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
+    background-color: #800080;
+    border-color: #FF00FF;
 }
 
 .btn-warning {
-    background-color: #ffc107;
-    border-color: #ffc107;
+    background-color: #0000FF;
+    border-color: #007bff;
     font-weight: 500;
     border-radius: 50px;
+    color: white;
+}
+
+.btn-warning:hover{
+    background-color: #007bff;
+    border-color: #0000FF;
 }
 
 .btn-danger {
@@ -116,19 +122,22 @@ h1, h3 {
 #carrusel,
 #carrusel img{
     height: 80vh;
-    margin-left: 30px;
-    margin-right: 40px;
+    margin-left: 52px;
+    margin-right: 110px ;
 }
 
 #copy{
     text-align: center;
+    color: white;
+    padding-top: 2%;
 }
 
 @media (max-width : 800px) {
-    #carrusel,
+#carrusel,
 #carrusel img{
     height: 40vh;
     margin-left: 0px;
     margin-right: 0px;
 }
 }
+
