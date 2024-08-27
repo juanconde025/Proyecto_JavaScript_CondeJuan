@@ -8,7 +8,29 @@ function loadResources() {
     if (storedResources) {
         resources = JSON.parse(storedResources);
         renderResources();
+        fetchImagesAndRender();
+    } else {
+        fetchImagesAndRender();
     }
+}
+
+function fetchImagesAndRender() {
+    fetch('https://66cddf808ca9aa6c8ccc01bc.mockapi.io/movies-series')
+        .then(response => response.json())
+        .then(data => {
+                resources = resources.map(resource => {
+                    const matchedResource = data.find(item => item.title.toLowerCase() === resource.title.toLowerCase());
+                    if (matchedResource) {
+                        resource.image = matchedResource.image;
+                    } else {
+                        resource.image = 'https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fff459c11-2526-48bd-bcc9-02394f806966_686x1083.png'; 
+                    }
+                    return resource;
+                });
+                renderResources();
+                saveResources();
+        })
+        .catch(error => console.error(error));
 }
 
 function saveResources() {
@@ -115,12 +137,14 @@ resourceForm.addEventListener('submit', function(event) {
     if (!isValidEndDate(date)) {
         alert('La fecha de terminación no puede ser una fecha futura.');
         return;
-    }else if(state === 'pendiente' || state === 'en-progreso' && date){
+    }else if(state === 'en-progreso' && date){
         alert('No puedes poner una fecha si el contenido no esta terminado');
         return;
     }else if(state === 'terminado' && !date){
         alert('Si has agregado un contenido deberías ponerle fecha');
         return;
+    }else if(state === 'pendiente' && date){
+        alert('No puedes poner una fecha si el contenido no esta terminado')
     }
 
     const resource = { 
@@ -276,33 +300,6 @@ function renderFilteredResources(filteredResources) {
     });
 }
 
-function loadResources() {
-    const storedResources = localStorage.getItem('resources');
-    if (storedResources) {
-        resources = JSON.parse(storedResources);
-        fetchImagesAndRender();
-    } else {
-        fetchImagesAndRender();
-    }
-}
 
-function fetchImagesAndRender() {
-    fetch('https://66cddf808ca9aa6c8ccc01bc.mockapi.io/movies-series')
-        .then(response => response.json())
-        .then(data => {
-                resources = resources.map(resource => {
-                    const matchedResource = data.find(item => item.title.toLowerCase() === resource.title.toLowerCase());
-                    if (matchedResource) {
-                        resource.image = matchedResource.image;
-                    } else {
-                        resource.image = 'https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fff459c11-2526-48bd-bcc9-02394f806966_686x1083.png'; 
-                    }
-                    return resource;
-                });
-                renderResources();
-                saveResources();
-        })
-        .catch(error => console.error('Error fetching images:', error));
-}
 
 window.onload = loadResources;
