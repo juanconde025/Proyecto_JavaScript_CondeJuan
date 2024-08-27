@@ -62,7 +62,7 @@ function renderResources() {
                             <p class="card-text mt-3"><strong>Reseña:</strong></p>
                             <p class="card-text">${resource.review || 'Sin reseña disponible.'}</p>
                             <div class="d-flex justify-content-end mt-3">
-                                <button class="btn btn-sm btn-warning me-2" onclick="editResource(${index})">Editar</button>
+                                <a href="#resourceForm"><button class="btn btn-sm btn-warning me-2" onclick="editResource(${index})">Editar</button></a>
                                 <button class="btn btn-sm btn-danger" onclick="deleteResource(${index})">Eliminar</button>
                             </div>
                         </div>
@@ -148,6 +148,8 @@ resourceForm.addEventListener('submit', function(event) {
     resourceForm.reset();
     updateStarRating(0); // Reinicia las estrellas
     selectedRating = 0;
+
+    document.getElementById('copy').scrollIntoView({ behavior: 'smooth' });
 });
 
 // Función para eliminar un recurso
@@ -275,7 +277,7 @@ function renderFilteredResources(filteredResources) {
                             <p class="card-text mt-3"><strong>Reseña:</strong></p>
                             <p class="card-text">${resource.review || 'Sin reseña disponible.'}</p>
                             <div class="d-flex justify-content-end mt-3">
-                                <button class="btn btn-sm btn-warning me-2" onclick="editResource(${index})">Editar</button>
+                                <a href="#resourceForm"><button class="btn btn-sm btn-warning me-2" onclick="editResource(${index})">Editar</button></a>
                                 <button class="btn btn-sm btn-danger" onclick="deleteResource(${index})">Eliminar</button>
                             </div>
                         </div>
