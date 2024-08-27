@@ -102,7 +102,6 @@ function isValidEndDate(date) {
     return endDate <= today;
 }
 
-// Función para añadir un recurso
 resourceForm.addEventListener('submit', function(event) {
     event.preventDefault();
     const title = document.getElementById('title').value;
@@ -291,17 +290,17 @@ function fetchImagesAndRender() {
     fetch('https://66cddf808ca9aa6c8ccc01bc.mockapi.io/movies-series')
         .then(response => response.json())
         .then(data => {
-            resources = resources.map(resource => {
-                const matchedResource = data.find(item => item.title.toLowerCase() === resource.title.toLowerCase());
-                if (matchedResource) {
-                    resource.image = matchedResource.image;
-                } else {
-                    resource.image = 'https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fff459c11-2526-48bd-bcc9-02394f806966_686x1083.png'; 
-                }
-                return resource;
-            });
-            renderResources();
-            saveResources();
+                resources = resources.map(resource => {
+                    const matchedResource = data.find(item => item.title.toLowerCase() === resource.title.toLowerCase());
+                    if (matchedResource) {
+                        resource.image = matchedResource.image;
+                    } else {
+                        resource.image = 'https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fff459c11-2526-48bd-bcc9-02394f806966_686x1083.png'; 
+                    }
+                    return resource;
+                });
+                renderResources();
+                saveResources();
         })
         .catch(error => console.error('Error fetching images:', error));
 }
