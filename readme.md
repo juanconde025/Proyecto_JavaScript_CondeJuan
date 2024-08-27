@@ -8,6 +8,7 @@
 | 3. | [Tecnologias Utilizadas](#Tecnologias) |
 | 4. | [Instrucciones de Ejecución](#Instrucciones-de-ejecucion) |
 | 5. | [Estructuracion](#Estructuracion) |
+| 6. | [Etapa de diseño](#Etapa-de-diseño) |
 
 #### Descripcion 🚀
 
@@ -54,3 +55,14 @@ B --> E(Editar)
 B --> F(Eliminar)
 A --Filtros--> G(Estado, Formato, Plataforma o por el título en específico)
 ```
+
+### Etapa de diseño 🎨
+
+En esta etapa se tuvo un enfoque hacia la parte visual del usuario, maquetando la interfaz principal:
+
+![Interfaz principal](img/interfaz.png)
+
+Y adicionalmente se le maqueto el diseño del contenido guardado:
+
+![Contenido](img/contnenido.png)
+
