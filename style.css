@@ -132,6 +132,10 @@ h1, h3 {
     padding-top: 2%;
 }
 
+.list-group-item .card img {
+    width: 15vw;
+}
+
 @media (max-width : 800px) {
 #carrusel,
 #carrusel img{

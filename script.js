@@ -1,11 +1,8 @@
-// Array para almacenar los recursos
 let resources = [];
 
-// Selecciona los elementos del DOM
 const resourceForm = document.getElementById('resourceForm');
 const resourceList = document.getElementById('resourceList');
 
-// Función para cargar recursos desde el localStorage
 function loadResources() {
     const storedResources = localStorage.getItem('resources');
     if (storedResources) {
@@ -14,19 +11,16 @@ function loadResources() {
     }
 }
 
-// Función para guardar recursos en el localStorage
 function saveResources() {
     localStorage.setItem('resources', JSON.stringify(resources));
 }
 
-// Función para renderizar la lista de recursos
 function renderResources() {
     resourceList.innerHTML = '';
     resources.forEach((resource, index) => {
         const li = document.createElement('li');
         li.className = 'list-group-item';
 
-        // Determinar el porcentaje de la barra de progreso basado en el estado
         let progressValue = 0;
         if (resource.state === 'en-progreso') {
             progressValue = 50;
@@ -38,6 +32,7 @@ function renderResources() {
             <div class="card mb-3 shadow-sm">
                 <div class="row g-0">
                     <div class="col-md-4 d-flex align-items-center justify-content-center bg-light">
+                    <img src="${resource.image}" alt="${resource.title}" class="img-fluid p-3">
                         <div class="text-center p-3">
                             <h5 class="card-title">${resource.title}</h5>
                             <p class="card-text"><span class="badge bg-secondary text-capitalize">${resource.gender}</span></p>
@@ -74,7 +69,6 @@ function renderResources() {
     });
 }
 
-// Función para formatear el estado con texto capitalizado
 function formatState(state) {
     switch(state) {
         case 'en-progreso':
@@ -88,7 +82,6 @@ function formatState(state) {
     }
 }
 
-// Función para obtener la clase de la barra de progreso según el estado
 function getProgressBarClass(state) {
     switch(state) {
         case 'en-progreso':
@@ -144,22 +137,20 @@ resourceForm.addEventListener('submit', function(event) {
     resources.push(resource);
 
     renderResources();
-    saveResources(); // Guardar en localStorage
+    saveResources(); 
     resourceForm.reset();
-    updateStarRating(0); // Reinicia las estrellas
+    updateStarRating(0); 
     selectedRating = 0;
 
     document.getElementById('copy').scrollIntoView({ behavior: 'smooth' });
 });
 
-// Función para eliminar un recurso
 function deleteResource(index) {
     resources.splice(index, 1);
     renderResources();
-    saveResources(); // Guardar cambios en localStorage
+    saveResources(); 
 }
 
-// Función para editar un recurso
 function editResource(index) {
     const resource = resources[index];
     document.getElementById('title').value = resource.title;
@@ -174,12 +165,11 @@ function editResource(index) {
 
     resources.splice(index, 1);
     renderResources();
-    saveResources(); // Guardar cambios en localStorage
+    saveResources(); 
 }
 
-let selectedRating = 0; // Variable para almacenar la valoración seleccionada
+let selectedRating = 0; 
 
-// Añadir un Event Listener para cada estrella en el formulario
 document.querySelectorAll('#rating .star').forEach(star => {
     star.addEventListener('click', function() {
         selectedRating = parseInt(this.getAttribute('data-value'));
@@ -187,7 +177,6 @@ document.querySelectorAll('#rating .star').forEach(star => {
     });
 });
 
-// Función para actualizar el estado de las estrellas en el formulario
 function updateStarRating(rating) {
     document.querySelectorAll('#rating .star').forEach(star => {
         if (parseInt(star.getAttribute('data-value')) <= rating) {
@@ -200,7 +189,6 @@ function updateStarRating(rating) {
     });
 }
 
-// Función para renderizar las estrellas de la valoración en las tarjetas
 function renderStars(rating) {
     let stars = '';
     for (let i = 1; i <= 5; i++) {
@@ -241,7 +229,6 @@ function renderFilteredResources(filteredResources) {
         const li = document.createElement('li');
         li.className = 'list-group-item';
 
-        // Determinar el porcentaje de la barra de progreso basado en el estado
         let progressValue = 0;
         if (resource.state === 'en-progreso') {
             progressValue = 50;
@@ -253,6 +240,7 @@ function renderFilteredResources(filteredResources) {
             <div class="card mb-3 shadow-sm">
                 <div class="row g-0">
                     <div class="col-md-4 d-flex align-items-center justify-content-center bg-light">
+                    <img src="${resource.image}" alt="${resource.title}" class="img-fluid p-3">
                         <div class="text-center p-3">
                             <h5 class="card-title">${resource.title}</h5>
                             <p class="card-text"><span class="badge bg-secondary text-capitalize">${resource.gender}</span></p>
@@ -289,5 +277,33 @@ function renderFilteredResources(filteredResources) {
     });
 }
 
-// Cargar los recursos cuando se carga la página
+function loadResources() {
+    const storedResources = localStorage.getItem('resources');
+    if (storedResources) {
+        resources = JSON.parse(storedResources);
+        fetchImagesAndRender();
+    } else {
+        fetchImagesAndRender();
+    }
+}
+
+function fetchImagesAndRender() {
+    fetch('https://66cddf808ca9aa6c8ccc01bc.mockapi.io/movies-series')
+        .then(response => response.json())
+        .then(data => {
+            resources = resources.map(resource => {
+                const matchedResource = data.find(item => item.title.toLowerCase() === resource.title.toLowerCase());
+                if (matchedResource) {
+                    resource.image = matchedResource.image;
+                } else {
+                    resource.image = 'https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fff459c11-2526-48bd-bcc9-02394f806966_686x1083.png'; 
+                }
+                return resource;
+            });
+            renderResources();
+            saveResources();
+        })
+        .catch(error => console.error('Error fetching images:', error));
+}
+
 window.onload = loadResources;
