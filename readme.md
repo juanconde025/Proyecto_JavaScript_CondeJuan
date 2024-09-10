@@ -5,10 +5,11 @@
 |--|--|
 | 1. | [Descripción](#Descripcion) |
 | 2. | [Caracteristicas Principales](#Caracteristicas) |
-| 3. | [Tecnologias Utilizadas](#Tecnologias) |
-| 4. | [Instrucciones de Ejecución](#Instrucciones-de-ejecucion) |
+| 3. | [Tecnologías Utilizadas](#Tecnologias) |
+| 4. | [Instrucciones de Ejecución](#Instrucciones_de_ejecucion) |
 | 5. | [Estructuracion](#Estructuracion) |
-| 6. | [Etapa de diseño](#Etapa-de-diseño)|
+| 6. | [Etapa de diseño](#Etapa_de_diseño) |
+
 
 ## Descripcion 🚀
 
