@@ -8,13 +8,13 @@
 | 3. | [Tecnologias Utilizadas](#Tecnologias) |
 | 4. | [Instrucciones de Ejecución](#Instrucciones-de-ejecucion) |
 | 5. | [Estructuracion](#Estructuracion) |
-| 6. | [Etapa de diseño](#Etapa-de-diseño) |
+| 6. | [Etapa de diseño](#Etapa-de-diseño)|
 
-#### Descripcion 🚀
+## Descripcion 🚀
 
 El proyecto MisPelis.resources consiste en una página web que ayuda a los usuarios a llevar un registro de los contenidos que ha visto o desea ver
 
-#### Caracteristicas 🧮
+## Caracteristicas 🧮
 
 1. **Crear Contenido** 🎬: Permite crear el contenido por 
 - Nombre del recurso.
@@ -33,18 +33,18 @@ El proyecto MisPelis.resources consiste en una página web que ayuda a los usuar
 3. **Buscar Contenido por medio de filtros** 🔎 : Permite buscar el contenido por medio del estado, formato, plataforma o por el título en específico
 
 
-#### Tecnologias  🖥️
+## Tecnologias  🖥️
 
 - **HTML** 🏗️: Se estructuró la pagina con esta tecnología
 - **CSS** 🖌️: Se apoyo de esta tecnología para darle estilos adicionales
 - **JavaScript** 🧠: Se le dio funcionalidades de CRUD y filtrado por medio de esta tecnología
 - **Bootstrap** 🎨: Se apoyo de esta tecnología para darle estilos y estructuración a la interfaz
 
-#### Instrucciones de ejecucion 📐
+## Instrucciones de ejecucion 📐
 
 - **Ve al link** 🔗 : https://juanconde025.github.io/Proyecto_JavaScript_CondeJuan/
 
-#### Estructuracion 📄 
+## Estructuracion 📄 
 
 ```mermaid
 graph LR
@@ -56,7 +56,7 @@ B --> F(Eliminar)
 A --Filtros--> G(Estado, Formato, Plataforma o por el título en específico)
 ```
 
-### Etapa de diseño 🎨
+## Etapa de diseño 🎨
 
 En esta etapa se tuvo un enfoque hacia la parte visual del usuario, maquetando la interfaz principal:
 
